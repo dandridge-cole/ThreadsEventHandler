@@ -18,14 +18,7 @@ public class EventListener extends Thread{
 
     public void run() {
         while(!readyToQuit()){
-            if(shouldReply()){
-                eventTracker.handle(messageToReplyWith, new EventHandler() {
-                    @Override
-                    public void handle() {
-                        reply();
-                    }
-                });
-            }
+            if(shouldReply()) reply();
         }
     }
 
@@ -38,6 +31,7 @@ public class EventListener extends Thread{
     }
 
     public void reply() {
-        System.out.println(messageToReplyWith);
+        eventTracker.handle(messageToReplyWith, () -> System.out.println(messageToReplyWith));
+
     }
 }
